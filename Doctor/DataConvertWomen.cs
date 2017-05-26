@@ -161,8 +161,9 @@ namespace Doctor
                         //value = System.Web.HttpUtility.UrlEncode(value, Encoding.GetEncoding("utf-8"));
                     } 
                 }
-                if (hasChinese(value)) {
-                    value = System.Web.HttpUtility.UrlEncode(value, Encoding.GetEncoding("utf-8"));
+                if (hasChinese(value) || key == "urineRoutineDescribe" || key == "testerName")
+                {
+                    value = SysConstUrl.UrlEncode(value, Encoding.GetEncoding("utf-8"));
                 }
                 if (key == "wcheckDate") {
                     value = value.Replace("/","-");
@@ -176,6 +177,7 @@ namespace Doctor
         public bool hasChinese(string CString)
         {
             return Regex.IsMatch(CString, @"^.*[\u4e00-\u9fa5].*$"); //存在中文
+            //return !Regex.IsMatch(CString, @"^[a-zA-Z0-9]*$"); 
         }
 
     }

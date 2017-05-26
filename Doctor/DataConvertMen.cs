@@ -148,8 +148,9 @@ namespace Doctor
                         //value = System.Web.HttpUtility.UrlEncode(value, Encoding.GetEncoding("utf-8"));
                     } 
                 }
-                if (hasChinese(value)) {
-                    value = System.Web.HttpUtility.UrlEncode(value, Encoding.GetEncoding("utf-8"));
+                if (hasChinese(value) || key == "urineRoutineDescribe" || key == "testerName")
+                {
+                    value = SysConstUrl.UrlEncode(value, Encoding.GetEncoding("utf-8"));
                 }
                 if (key == "asktimeM")
                 {
