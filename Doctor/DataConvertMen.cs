@@ -26,19 +26,25 @@ namespace Doctor
             type1.Add("可疑", "9");
 
             Dictionary<string, string> type2 = new Dictionary<string, string>();
-            type2.Add("I", "0");
-            type2.Add("II", "1");
-            type2.Add("III", "2");
-            type2.Add("IV", "3");
+            //type2.Add("I", "0");
+            //type2.Add("II", "1");
+            //type2.Add("III", "2");
+            //type2.Add("IV", "3");
+            type2.Add("Ⅰ", "0");//Ⅰ
+            type2.Add("Ⅱ", "1");//Ⅱ
+            type2.Add("Ⅲ", "2");//Ⅲ
+            type2.Add("Ⅳ", "3");//Ⅳ
+
 
             Dictionary<string, string> type3 = new Dictionary<string, string>();
             type3.Add("<4.5", "0");
             type3.Add(">=4.5", "1");
+            type3.Add(">4.5", "1");
 
             Dictionary<string, string> type4 = new Dictionary<string, string>();
             type4.Add("未见异常", "0");
             type4.Add("异常", "1");
-
+            type4.Add("正常", "0");
 
             Dictionary<string, string> type5 = new Dictionary<string, string>();
             type5.Add("A", "1");
@@ -95,6 +101,13 @@ namespace Doctor
             men.Add("testerName", null);               //医师签名
             men.Add("asktimeM", null);               //检查日期
 
+            men.Add("custom97", null);        
+            men.Add("custom98", null);        
+            men.Add("custom99", null);
+            men.Add("custom142", null);       
+            men.Add("custom146", null);       
+          //  men.Add("custom92", null);      
+
 
             menType.Add("hb","custom87");                      //hb
             menType.Add("rbc","custom88");                     //rbc
@@ -116,14 +129,20 @@ namespace Doctor
             menType.Add("hbeab","eabM");                   //hbeab
             menType.Add("hbcab","cabM");                   //hbcab
             menType.Add("谷丙转氨酶","altM" );                     //谷丙转氨酶
+            menType.Add("肌酐", "crM");
             menType.Add("梅毒螺旋筛查","microSPM" );                //梅毒螺旋筛查
             menType.Add("MCV","custom82" );                 //MCV
             menType.Add("MCH","custom86");                 //MCH
             menType.Add( "G6PD比值","custom140");                //G6PD比值
-            menType.Add( "酶活性测定","custom141");                //G6PD酶活性测定
+            menType.Add("G6PD酶活性测定", "custom141");                //G6PD酶活性测定
             menType.Add("其它检查","elseItem" );                 //其它检查
             menType.Add("医师签名","testerName" );               //医师签名
             menType.Add( "检查日期","asktimeM");               //检查日期
+            menType.Add("HBA2", "custom97");
+            menType.Add("HBA", "custom98");
+            menType.Add("HBF", "custom99");
+            menType.Add("G6PD", "custom142");
+            menType.Add("HIV", "custom146");   
         
 
             

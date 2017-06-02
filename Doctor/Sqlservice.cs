@@ -5,27 +5,43 @@ using System.Text;
 using System.Threading.Tasks;        
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
+
 
 namespace Doctor
 {
     class Sqlservice
     {
 
-        public string ConnectString = "server=(localdb)\\Projects;database=doctor;user=dba;pwd=abcd1234@"; 
+        public string ConnectString = "";
 
-        public void test() {
+        public SqlConnection con = null;
+
+        public Sqlservice() {
+            this.ConnectString = ConfigurationManager.AppSettings["SQL"];
+        }
+
+        public SqlConnection getConn()
+        {
+            if (con == null)
+            {
+                con = new SqlConnection(ConnectString);
+                con.Open();
+            }
+            return con;
+        }
+        public void test(bool flag) {
 
             //数据库连接字符串，注意这个写法（localdb）后面必须是两个斜杠，因为这中间有个转义的过程
 	            //Initial Catalog=要连接的数据库名
 	            //Intergrated Security=true  开启windows身份验证
-           
-	            SqlConnection con = null;
+          
 	            SqlCommand cmd = null;
 	            SqlDataReader str = null;
 	            try { 
 	                con = new SqlConnection(ConnectString);       //连接到数据库
 	                cmd = con.CreateCommand();
-                    cmd.CommandText = "select * from dbo.Y_JCJG where sex = N'女'"; //T-SQL语句    
+                    cmd.CommandText = "select * from dbo.Y_JCJG where sex = N'女' and isUpdate = N'0'" ; //T-SQL语句    
 	                con.Open();                                  //创建连接后需要用Open打开连接，结束后要关闭连接，及时释放资源
 	                str = cmd.ExecuteReader();                  
 	                while(str.Read()){
@@ -35,7 +51,7 @@ namespace Doctor
                         for (int n = 0; n < str.FieldCount; n++){
                         
                             string key = str.GetName(n);
-                            string value = str.GetValue(n).ToString();
+                            string value = str.GetValue(n).ToString().Trim();
                             if (DataConvertWomen.womenType.ContainsKey(key)) {
                                 map.Add(DataConvertWomen.womenType[key],value);
                             }
@@ -51,8 +67,15 @@ namespace Doctor
                         if (sfz == null)
                             continue;
                         // Dictionary<string, string> temp = DataConvert.getInstance().
-                        MainService.getInstance().work(sfz, map, getMen(no));
+                        try
+                        {
+                            MainService.getInstance().work(sfz, map, getMen(no), no, flag);
+                        }
+                        catch (Exception)
+                        { 
+                        }
 	                    }
+
 	                }
 	            catch(Exception ms)
 	            {
@@ -60,6 +83,7 @@ namespace Doctor
 	            }
 	            finally
 	            {
+                    if(str != null)
 	                str.Close();
 	                cmd.Clone();
 	                con.Close();
@@ -92,7 +116,7 @@ namespace Doctor
                     {
 
                         string key = str.GetName(n);
-                        string value = str.GetValue(n).ToString();
+                        string value = str.GetValue(n).ToString().Trim();
                         if (DataConvertMen.menType.ContainsKey(key))
                         {
                             map.Add(DataConvertMen.menType[key], value);

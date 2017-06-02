@@ -25,19 +25,24 @@ namespace Doctor
             type1.Add("可疑", "9");
 
             Dictionary<string, string> type2 = new Dictionary<string, string>();
-            type2.Add("I", "0");
-            type2.Add("II", "1");
-            type2.Add("III", "2");
-            type2.Add("IV", "3");
+            //type2.add("i", "0");
+           // type2.add("ii", "1");
+           // type2.add("iii", "2");
+           // type2.add("iv", "3");
+            type2.Add("Ⅰ", "0");//Ⅰ
+            type2.Add("Ⅱ", "1");//Ⅱ
+            type2.Add("Ⅲ", "2");//Ⅲ
+            type2.Add("Ⅳ", "3");//Ⅳ
 
             Dictionary<string, string> type3 = new Dictionary<string, string>();
             type3.Add("<4.5", "0");
             type3.Add(">=4.5", "1");
+            type3.Add(">4.5", "1");
 
             Dictionary<string, string> type4 = new Dictionary<string, string>();
             type4.Add("未见异常", "0");
             type4.Add("异常", "1");
-
+            type4.Add("正常", "0");
 
             Dictionary<string, string> type5 = new Dictionary<string, string>();
             type5.Add("A", "1");
@@ -94,6 +99,12 @@ namespace Doctor
             women.Add("testerName", null);               //医师签名
             women.Add("wcheckDate", null);               //检查日期
 
+            women.Add("custom45", null);
+            women.Add("custom44", null);
+            women.Add("custom46", null);
+            women.Add("custom137", null);
+            women.Add("custom143", null);  
+
 
             womenType.Add("线索细胞", "leuClueCell1");              //线索细胞
             womenType.Add("念珠菌", "candidiasis");              //念珠菌
@@ -138,6 +149,12 @@ namespace Doctor
             womenType.Add("其它检查", "elseItem");                 //其它检查
             womenType.Add("医师签名", "testerName");               //医师签名
             womenType.Add("检查日期", "wcheckDate");               //检查日期
+
+            womenType.Add("HBA","custom45" );
+            womenType.Add("HBA2","custom44");
+            womenType.Add("HBF","custom46");
+            womenType.Add("G6PD","custom137" );
+            womenType.Add( "HIV","custom143"); 
 
             
         }

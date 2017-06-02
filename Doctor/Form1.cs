@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -13,8 +14,25 @@ namespace Doctor
 {
     [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
+
     public partial class Form1 : Form
     {
+        delegate void SetTextCallback(string text);
+
+        public void SetText(string text)
+        {
+            if (this.richTextBox1.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetText);
+                this.richTextBox1.Invoke(d, new object[] { text });
+                
+            }
+            else
+            {
+                richTextBox1.AppendText(text+"\n");
+            }
+
+        }
 
         CookieContainer cook = null;
         public Form1()
@@ -57,9 +75,15 @@ namespace Doctor
             DataConvertMen.getInstance();
             //this.webBrowser1.Navigate("");
            // this.button1.Visible = false;
+
+            MainService.getInstance().form1 = this;
+           
             
             //MainService.getInstance().work();
-            new Sqlservice().test();
+            new Sqlservice().test(this.checkBox1.Checked);
+
+            datafresh();
+
         }
 
 
@@ -78,6 +102,47 @@ namespace Doctor
                 myCookieContainer.Add(ck);
             }
             return myCookieContainer;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            webBrowser1.Visible = false;
+
+            button2.Visible = true;
+            button3.Visible = true;
+            this.checkBox1.Visible = true;
+            datafresh();
+
+            button2.Visible = false;
+
+            button1.Visible = true;
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+            datafresh();
+        }
+
+        public void datafresh()
+        {
+            string ConnectString = "server=(localdb)\\Projects;database=doctor;user=dba;pwd=abcd1234@";
+
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+
+            con = new SqlConnection(ConnectString);       //连接到数据库
+            cmd = con.CreateCommand();
+            cmd.CommandText = "select * from dbo.Y_JCJG where isUpdate = N'0'"; //T-SQL语句    
+            con.Open();                                  //创建连接后需要用Open打开连接，结束后要关闭连接，及时释放资源
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            dataGridView1.ReadOnly = true;
+            da.Fill(ds, "Y_JCJG");
+            dataGridView1.DataSource = ds;
+
+            dataGridView1.DataMember = "Y_JCJG";
         }
     }
 }
