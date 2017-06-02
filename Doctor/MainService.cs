@@ -106,8 +106,8 @@ namespace Doctor
             JObject search = http.httpForJson(url);
             Console.WriteLine(search.ToString());
             Console.WriteLine(search["models"]);
-            string ids = search["models"][0]["id"].ToString();
-            string mm = search["models"][0]["gdLabExamM"]["enumConstByComplete"]["name"].ToString();
+            string ids = search["models"][0]["id"].Value<string>();
+            string mm = search["models"][0]["gdLabExamM"]["enumConstByComplete"]["name"].Value<string>();
             bool wFlag = mm== "首诊完成" ? true : false;
             //string gg = search["models"][0]["gdLabExamM"]["enumConstByCompleteM"]["name"].ToString();
             //bool mFlag = gg== "首诊完成" ? true : false;
@@ -130,7 +130,8 @@ namespace Doctor
             //url = SysConstUrl.submit;
             //url = url.Replace("ids11", ids);
             JObject result = http.httpForJson(url);
-            if (result["success"].ToString()== "True")
+            
+            if (result["success"].Value<string>()== "True")
             {
                 Console.WriteLine("更新女成功");
 
@@ -152,7 +153,9 @@ namespace Doctor
             //url = SysConstUrl.submit;
             //url = url.Replace("ids11", ids);
             result = http.httpForJson(url);
-            if (result["success"].ToString()=="True") {
+
+            if (result["success"].Value<string>() == "True")
+            {
                 Console.WriteLine("更新男成功");
                 string sql_update = "update dbo.Y_JCJG set isUpdate = N'1' where sex = N'男' and no=N'" + no + "'";
                 cmd.CommandText = sql_update;
