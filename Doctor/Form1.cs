@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -127,7 +128,7 @@ namespace Doctor
 
         public void datafresh()
         {
-            string ConnectString = "server=(localdb)\\Projects;database=doctor;user=dba;pwd=abcd1234@";
+            string ConnectString = ConfigurationManager.AppSettings["SQL"];
 
             SqlConnection con = null;
             SqlCommand cmd = null;
@@ -143,6 +144,11 @@ namespace Doctor
             dataGridView1.DataSource = ds;
 
             dataGridView1.DataMember = "Y_JCJG";
+        }
+
+        private void dataGridView1_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            e.Row.HeaderCell.Value = string.Format("{0}", e.Row.Index + 1);  
         }
     }
 }
